@@ -596,11 +596,57 @@
 					public function tab() {
 
 						try {
-						
+
+							$DBH = new PDO("mysql:host=sql2.njit.edu;dbname=smb38", smb38, V81iX37K); 
+							$STH = $DBH->query('SELECT INS, (((sum(f.LIA)-sum(f2.LIA))/sum(f2.LIA))*100) as lia
+												FROM f1a0910 f2, f1a1011 f, hd2011 h
+												WHERE f.ID = h.ID AND f2.ID = h.ID AND f.ID = f2.ID 
+												Group By INS
+												ORDER BY lia DESC
+												LIMIT 10;');  
+	  
+							$STH->setFetchMode(PDO::FETCH_OBJ);  
+							  
+							$tab = '<h4>Precentage Increase of Liabilities 10-11</h4>
+								   <table class="table">
+									<tr><th>School</th><th>Percentage</th></tr>';
+
+							while($row = $STH->fetch()) {  
+
+							    $tab .= '<tr><td>' . $row->INS . '</td><td>' . $row->lia . '%</td></tr>';
+							    
+							    
+							} 
+					
+							$tab .= '</table>';
+							$STH = $DBH->query('SELECT h.INS, (((sum(e2.EY)-sum(e.EY))/sum(e.EY))*100) as tsp
+												FROM effy2010 e, effy2011 e2, hd2011 h
+												WHERE e.ID = h.ID AND e2.ID = h.ID AND e.ID = e2.ID
+												GROUP BY INS
+												ORDER BY tsp DESC
+												LIMIT 10;');  
+	  
+							$STH->setFetchMode(PDO::FETCH_OBJ);  
+							  
+							$tab .= '<h4>Precentage Increase of Enrollment 10-11</h4>
+								   <table class="table">
+									<tr><th>School</th><th>Percentage</th></tr>';
+
+							while($row = $STH->fetch()) {  
+
+							    $tab .= '<tr><td>' . $row->INS . '</td><td>' . $row->tsp . '%</td></tr>';
+							    
+							    
+							} 
+					
+							$tab .= '</table>';
+
 
 						} catch(PDOException $e) {
 								echo $e->getMessage();
 						}
+
+						return $tab;
 
 					}
 

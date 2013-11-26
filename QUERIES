@@ -117,9 +117,24 @@ SELECT INS
 FROM hd2011
 WHERE hd2011.AB = 'NJ'
 
-11. 
+11. percentage net increase of liabilities for 10-11
+
+SELECT INS, (((sum(f.LIA)-sum(f2.LIA))/sum(f2.LIA))*100) as lia
+FROM f1a0910 f2, f1a1011 f, hd2011 h
+WHERE f.ID = h.ID AND f2.ID = h.ID AND f.ID = f2.ID 
+Group By INS
+ORDER BY lia DESC
+LIMIT 10
 
 
+12. percentage of enrollmet increase
+
+SELECT h.INS, (((sum(e2.EY)-sum(e.EY))/sum(e.EY))*100) as tsp
+FROM effy2010 e, effy2011 e2, hd2011 h
+WHERE e.ID = h.ID AND e2.ID = h.ID AND e.ID = e2.ID
+GROUP BY INS
+ORDER BY tsp DESC
+LIMIT 10;
 
 
 
