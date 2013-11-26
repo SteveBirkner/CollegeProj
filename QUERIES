@@ -1,0 +1,96 @@
+QUERIES
+
+
+1. Highest Enrollment
+
+2010
+SELECT h.INS, sum(e.EY) as Total_Students
+FROM effy2010 e, hd2011 h
+WHERE e.ID = h.ID 
+GROUP BY INS
+ORDER BY EY DESC
+LIMIT 10;
+
+2011
+SELECT h.INS, sum(e.EY) as Total_Students
+FROM effy2011 e, hd2011 h
+WHERE e.ID = h.ID 
+GROUP BY INS
+ORDER BY EY DESC
+LIMIT 10;
+
+2. Total Liabilities 
+09-10
+SELECT INS, sum(LIA) as Total_Liabilities
+FROM f1a0910 f, hd2011 h
+WHERE f.ID = h.ID
+Group By INS
+ORDER BY LIA DESC
+LIMIT 10
+
+10-11
+SELECT INS, sum(LIA) as Total_Liabilities
+FROM f1a1011 f, hd2011 h
+WHERE f.ID = h.ID
+Group By INS
+ORDER BY LIA DESC
+LIMIT 10
+
+3. Top Net Assest
+
+09-10
+SELECT INS, sum(NA) as Net_Assests
+FROM f1a0910 f, hd2011 h
+WHERE f.ID = h.ID
+Group By INS
+ORDER BY NA DESC
+LIMIT 10
+
+10-11
+
+SELECT INS, sum(NA) as Net_Assests
+FROM f1a1011 f, hd2011 h
+WHERE f.ID = h.ID
+Group By INS
+ORDER BY NA DESC
+LIMIT 10
+
+4. same as 3
+
+
+5. top total rev
+
+09-10
+SELECT INS, sum(REV) as Total_Revenue
+FROM f1a0910 f, hd2011 h
+WHERE f.ID = h.ID
+Group By INS
+ORDER BY REV DESC
+LIMIT 10
+
+10-11
+SELECT INS, sum(REV) as Total_Revenue
+FROM f1a1011 f, hd2011 h
+WHERE f.ID = h.ID
+Group By INS
+ORDER BY REV DESC
+LIMIT 10
+
+
+6. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
