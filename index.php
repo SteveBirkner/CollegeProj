@@ -94,7 +94,7 @@
 					}
 					
 					function post() {
-						echo "post";
+						//echo "post";
 						
 					}
 					
@@ -389,6 +389,91 @@
 							} 
 					
 							$tab .= '</table>';
+							$STH = $DBH->query('SELECT INS, (sum(NA) / sum(e.EY)) as ts
+												FROM f1a0910 f, hd2011 h, effy2010 e
+												WHERE f.ID = h.ID AND e.ID = f.ID AND e.ID = h.ID
+												Group By INS
+												ORDER BY ts DESC
+												LIMIT 10;');  
+	  
+							$STH->setFetchMode(PDO::FETCH_OBJ);  
+							  
+							$tab .= '<h4>Total Net Assets per Student 09-10</h4>
+								   <table class="table">
+									<tr><th>School</th><th>Assests per Student</th></tr>';
+
+							while($row = $STH->fetch()) {  
+
+							    $tab .= '<tr><td>' . $row->INS . '</td><td>' . $row->ts . '</td></tr>';
+							    
+							    
+							} 
+					
+							$tab .= '</table>';
+
+							$STH = $DBH->query('SELECT INS, (sum(NA) / sum(e.EY)) as ts
+												FROM f1a1011 f, hd2011 h, effy2010 e
+												WHERE f.ID = h.ID AND e.ID = f.ID AND e.ID = h.ID
+												Group By INS
+												ORDER BY ts DESC
+												LIMIT 10;');  
+	  
+							$STH->setFetchMode(PDO::FETCH_OBJ);  
+							  
+							$tab .= '<h4>Total Net Assets per Student 10-11</h4>
+								   <table class="table">
+									<tr><th>School</th><th>Assests per Student</th></tr>';
+
+							while($row = $STH->fetch()) {  
+
+							    $tab .= '<tr><td>' . $row->INS . '</td><td>' . $row->ts . '</td></tr>';
+							    
+							    
+							} 
+					
+							$tab .= '</table>';
+							$STH = $DBH->query('SELECT INS, (sum(LIA) / sum(e.EY)) as ts
+												FROM f1a0910 f, hd2011 h, effy2010 e
+												WHERE f.ID = h.ID AND e.ID = f.ID AND e.ID = h.ID
+												Group By INS
+												ORDER BY ts DESC
+												LIMIT 10;');  
+	  
+							$STH->setFetchMode(PDO::FETCH_OBJ);  
+							  
+							$tab .= '<h4>Total Libilities per Student 09-10</h4>
+								   <table class="table">
+									<tr><th>School</th><th>Liabilities per Student</th></tr>';
+
+							while($row = $STH->fetch()) {  
+
+							    $tab .= '<tr><td>' . $row->INS . '</td><td>' . $row->ts . '</td></tr>';
+							    
+							    
+							} 
+					
+							$tab .= '</table>';
+							$STH = $DBH->query('SELECT INS, (sum(LIA) / sum(e.EY)) as ts
+												FROM f1a1011 f, hd2011 h, effy2010 e
+												WHERE f.ID = h.ID AND e.ID = f.ID AND e.ID = h.ID
+												Group By INS
+												ORDER BY ts DESC
+												LIMIT 10;');  
+	  
+							$STH->setFetchMode(PDO::FETCH_OBJ);  
+							  
+							$tab .= '<h4>Total Libilities per Student 10-11</h4>
+								   <table class="table">
+									<tr><th>School</th><th>Liabilities per Student</th></tr>';
+
+							while($row = $STH->fetch()) {  
+
+							    $tab .= '<tr><td>' . $row->INS . '</td><td>' . $row->ts . '</td></tr>';
+							    
+							    
+							} 
+					
+							$tab .= '</table>';
 
 
 
@@ -422,19 +507,101 @@
 				
 				class ten extends page {
 					function get($arg){
-						session_start();
 						$this->content .= $this->menu();
+						$this->content .= $this->STAB();
+
 						
+					}
+
+					public function STAB(){
+
+						$form = '<h3>School Finder</h3>
+								 <p>Enter the Abbriviation of the state you want to see schools for.</p>  
+						         <form action="index.php?page=tenData" method="post">
+								 <p> 
+								 	<label for="stab">State Abbriviation: </label>
+									<input type="text" name="stab" id="stab"><br>
+								 </p>';
+
+						return $form;
 					}
 					
 					
 					
 				}
+
+				class tenData extends page {
+
+					function get($arg){
+						$this->content .= $this->menu();
+						$this->content .= $this->STAB($arg);
+
+						
+					}
+
+					public function STAB($arg){
+
+							try {
+								$DBH = new PDO("mysql:host=sql2.njit.edu;dbname=smb38", smb38, V81iX37K); 
+							    $STH = $DBH->query('SELECT INS
+													FROM hd2011
+													WHERE hd2011.AB="'. $arg .'";');  
+		  
+								$STH->setFetchMode(PDO::FETCH_OBJ);  
+								  
+								$tab = '<h4>Schools in the State: ' . $arg . '</h4>
+									   <table class="table">
+										<tr><th>School</th></tr>';
+
+								while($row = $STH->fetch()) {  
+
+								    $tab .= '<tr><td>' . $row->INS . '</td></tr>';
+								    
+								    
+								} 
+						
+								$tab .= '</table>';
+
+							} catch(PDOException $e) {
+								echo $e->getMessage();
+							}
+
+
+
+
+						return $tab;
+					}
+
+
+					function post(){
+
+						$stab = $_POST['stab'];
+
+						$this->get($stab);
+
+					}
+
+
+
+				}
 				
 				class elTen extends page {
 					function get($arg){
 						$this->content .= $this->menu();
+						$this->content .= $this->tab();
 					
+					}
+
+
+					public function tab() {
+
+						try {
+						
+
+						} catch(PDOException $e) {
+								echo $e->getMessage();
+						}
+
 					}
 
 					

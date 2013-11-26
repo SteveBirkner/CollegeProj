@@ -26,7 +26,7 @@ FROM f1a0910 f, hd2011 h
 WHERE f.ID = h.ID
 Group By INS
 ORDER BY LIA DESC
-LIMIT 10
+LIMIT 10;
 
 10-11
 SELECT INS, sum(LIA) as Total_Liabilities
@@ -44,7 +44,7 @@ FROM f1a0910 f, hd2011 h
 WHERE f.ID = h.ID
 Group By INS
 ORDER BY NA DESC
-LIMIT 10
+LIMIT 10;
 
 10-11
 
@@ -66,7 +66,7 @@ FROM f1a0910 f, hd2011 h
 WHERE f.ID = h.ID
 Group By INS
 ORDER BY REV DESC
-LIMIT 10
+LIMIT 10;
 
 10-11
 SELECT INS, sum(REV) as Total_Revenue
@@ -77,18 +77,47 @@ ORDER BY REV DESC
 LIMIT 10
 
 
-6. 
+6.  rev per student 
+
+0910 
+
+SELECT INS, (sum(REV) / sum(e.EY)) as ts
+FROM f1a0910 f, hd2011 h, effy2010 e
+WHERE f.ID = h.ID AND e.ID = f.ID AND e.ID = h.ID
+Group By INS
+ORDER BY ts DESC
+LIMIT 10;
+
+
+7. 
+ net ass per student
+SELECT INS, (sum(NA) / sum(e.EY)) as ts
+FROM f1a0910 f, hd2011 h, effy2010 e
+WHERE f.ID = h.ID AND e.ID = f.ID AND e.ID = h.ID
+Group By INS
+ORDER BY ts DESC
+LIMIT 10;
 
 
 
+8. liabilities per student
+
+SELECT INS, (sum(LIA) / sum(e.EY)) as ts
+FROM f1a0910 f, hd2011 h, effy2010 e
+WHERE f.ID = h.ID AND e.ID = f.ID AND e.ID = h.ID
+Group By INS
+ORDER BY ts DESC
+LIMIT 10
 
 
 
+10. state 
 
+SELECT INS
+FROM hd2011
+WHERE hd2011.AB = 'NJ'
 
-
-
-
+11. 
 
 
 
